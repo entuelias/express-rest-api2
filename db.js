@@ -17,12 +17,13 @@ db.connect((err) => {
 
 //creating my todoss table inside my todos_db
 const createTableQuery = `
-    CREATE TABLE todos(
+  CREATE TABLE IF NOT EXISTS todos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     task VARCHAR(255) NOT NULL,
-    status ENUM("pending","completed") DEFAULT "Pending"
-    )
+    status ENUM("pending", "completed") DEFAULT "pending"
+  )
 `;
+
 
 db.query(createTableQuery, (err, result) => {
   if (err) console.error("Error creating a table:", err);
