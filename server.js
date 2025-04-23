@@ -1,15 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const db = require("./db");
-
 
 const app = express();
 const PORT = 3000;
 
 // middleware day3 part i think
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); // modified replaced instead od bodyparse.json
 
 // 🟢 GET all todos
 app.get("/todos", (req, res) => {
@@ -64,6 +62,12 @@ app.delete("/todos/:id", (req, res) => {
     }
     res.json({ message: "Todo Deleted" });
   });
+});
+
+// Global handle errors day 3 focus
+app.use((err, res, next) => {
+  console.error("❌ Error:", err.message);
+  res.status(500).json({ error: "Something broke! 💥" });
 });
 
 // Start server(PORT)
